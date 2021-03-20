@@ -1,9 +1,10 @@
-﻿@page "/"
-
-@using FamilyManagerAssignment.Data
-@using FileData
+@page "/RemoveAdult"
 @using Models
-<h1>Welcome to your family manager!</h1>
+@using FileData
+<h3>RemoveAdult</h3>
+<button type="button" @onclick="HandleConfirmDelete">
+    Delete Selected
+</button>
 @if (adults == null)
 {
     <p>
@@ -31,7 +32,7 @@ else
         <tbody>
         @foreach (var adult in adults)
         {
-            <tr>
+            <tr @onclick="@(() => HandleDeleteList(adult))" style="cursor:pointer">
                 <td>@adult.Id.ToString()</td>
                 <td>@adult.FirstName</td>
                 <td>@adult.LastName</td>
@@ -51,9 +52,45 @@ else
 }
 @code {
     private IList<Adult> adults;
-    private FileContext fileContext = new FileContext();
+    private IList<Adult> adultToDelete = new List<Adult>();
+    private AdultFileContext fileContext = new AdultFileContext();
+
     protected override async Task OnInitializedAsync()
     {
-        adults =  fileContext.Adults;
+        adults = fileContext.Adults;
     }
+
+    private void HandleDeleteList(Adult adult)
+    {
+        Boolean flag = true;
+        for(int i = 0 ; i<adultToDelete.Count;i++)
+        {
+            if (adult.Equals(adultToDelete[i]) )
+            {
+                adultToDelete.Remove(adult);
+                flag = false;
+            }
+        }
+        if(flag)
+        {
+            adultToDelete.Add(adult);
+            Console.WriteLine(adult);}
+        else
+        {
+            adultToDelete.Remove(adult);
+            Console.WriteLine(adult);
+        }
+    }
+
+    private void HandleConfirmDelete()
+    {
+        if (adultToDelete.Count <= 1 && adultToDelete != null)
+        {
+            fileContext.RemoveAdults(adultToDelete);
+            adultToDelete.Clear();
+            
+        }
+
+}
+
 }
