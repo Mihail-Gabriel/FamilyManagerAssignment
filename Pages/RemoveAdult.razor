@@ -1,6 +1,13 @@
 @page "/RemoveAdult"
 @using Models
 @using FileData
+@inject AuthenticationStateProvider AuthenticationStateProvider
+<AuthorizeView >
+    <NotAuthorized>
+        <h3>You require to be logged in and an adult to access this page</h3>
+    </NotAuthorized>
+</AuthorizeView>
+<AuthorizeView Policy="MustBeAdult">
 <h3>RemoveAdult</h3>
 <button type="button" @onclick="HandleConfirmDelete">
     Delete Selected
@@ -50,6 +57,7 @@ else
     </table>
 
 }
+</AuthorizeView>
 @code {
     private IList<Adult> adults;
     private IList<Adult> adultToDelete = new List<Adult>();

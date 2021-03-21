@@ -1,0 +1,35 @@
+@page "/Register"
+
+@inject NavigationManager NavigationManager
+
+<h3>Register</h3>
+
+<form>
+    <p>
+        <label>
+            UserName
+            <InputText @bind-Value="username"/>
+        </label>
+    </p>
+    <p>
+        <label>
+            Password
+            <InputText type="password" @bind-Value="password"/>
+        </label>
+    </p>
+    <p>
+        <label>
+            Role
+            <InputSelect @bind-Value="role">
+                <option value="Adult">Adult</option>
+                <option value="Child">Child</option>
+            </InputSelect>
+        </label>
+    </p>
+</form>
+@code {
+    private string username;
+    private string password;
+    private string role;
+
+}

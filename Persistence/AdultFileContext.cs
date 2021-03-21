@@ -63,7 +63,6 @@ namespace FileData
                     return helper;
                 }
             }
-
             return null;
         }
 

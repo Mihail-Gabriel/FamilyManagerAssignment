@@ -1,0 +1,68 @@
+@page "/SearchAdult"
+@using Models
+@using FileData
+<h3>Search Adults</h3>
+<form>
+    <p>
+        Name: <input type="text" @bind-value="SearchString"/>
+        <input type="submit" value="Filter" @onclick="Search"/>
+    </p>
+</form>
+@if (returnedAdults == null)
+{
+    <p>
+        <em>No adults to display...</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>HairColour</th>
+            <th>EyeColour</th>
+            <th>Age</th>
+            <th>Weight</th>
+            <th>Height</th>
+            <th>Sex</th>
+            <th>Job Title</th>
+            <th>Salary</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var adult in returnedAdults)
+        {
+            <tr>
+                <td>@adult.Id.ToString()</td>
+                <td>@adult.FirstName</td>
+                <td>@adult.LastName</td>
+                <td>@adult.HairColor</td>
+                <td>@adult.EyeColor</td>
+                <td>@adult.Age.ToString()</td>
+                <td>@adult.Weight.ToString()</td>
+                <td>@adult.Height.ToString()</td>
+                <td>@adult.Sex</td>
+                <td>@adult.JobTitle.JobTitle</td>
+                <td>@adult.JobTitle.Salary.ToString()</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+@code {
+    private IList<Adult> returnedAdults;
+    private string SearchString;
+    AdultFileContext fileContext = new AdultFileContext();
+    
+    public void Search()
+    {
+        if (fileContext.SearchByName(SearchString) != null)
+        {
+            returnedAdults = fileContext.SearchByName(SearchString);
+        }
+    }
+    
+}

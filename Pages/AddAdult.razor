@@ -1,81 +1,93 @@
 ﻿@page "/AddAdult"
 @using Models
 @using FileData
-
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
 <h1>New Adult Form</h1>
-
-<EditForm Model="@adult"  OnValidSubmit="@AddAdults">
-    <DataAnnotationsValidator />
-    <ValidationSummary/>
-    <p>
-        <label>
-            Id:
-            <InputNumber @bind-Value="adult.Id"/>
-        </label>
-    </p>
-    <p>
-        <label>
-            FirstName:
-            <InputText @bind-Value="adult.FirstName"/>
-        </label>
-    </p>
-    <p>
-        <label>
-            LastName:
-            <InputText @bind-Value="adult.LastName"/>
-        </label>
-    </p>
-    <p>
-        <label>
-            Hair Colour:
-            <InputText @bind-Value="adult.HairColor"/>
-        </label>
-    </p>
-    <p>
-        <label>
-            Eye Colour:
-            <InputText @bind-Value="adult.EyeColor"/>
-        </label>
-    </p>
-    <p>
-        <label>
-            Age
-            <InputNumber @bind-Value="adult.Age"/>
-        </label>
-    </p>
-    <p>
-        <label>
-            Height
-            <InputNumber @bind-Value="adult.Height"/>
-        </label>
-    </p>
-    <p>
-        <label>
-            Weight
-            <InputNumber @bind-Value="adult.Weight"/>
-        </label>
-    </p>
-    <p>
-        <label>
-            Sex
-            <InputText @bind-Value="adult.Sex"/>
-        </label>
-    </p>
-    <button type="submit">Submit</button>
+    <EditForm Model="@adult"  OnValidSubmit="@AddAdults">
+        <DataAnnotationsValidator />
+        <ValidationSummary/>
+        <p>
+            <label>
+                Id:
+                <InputNumber @bind-Value="adult.Id"/>
+            </label>
+        </p>
+        <p>
+            <label>
+                FirstName:
+                <InputText @bind-Value="adult.FirstName"/>
+            </label>
+        </p>
+        <p>
+            <label>
+                LastName:
+                <InputText @bind-Value="adult.LastName"/>
+            </label>
+        </p>
+        <p>
+            <label>
+                Hair Colour:
+                <InputText @bind-Value="adult.HairColor"/>
+            </label>
+        </p>
+        <p>
+            <label>
+                Eye Colour:
+                <InputText @bind-Value="adult.EyeColor"/>
+            </label>
+        </p>
+        <p>
+            <label>
+                Age
+                <InputNumber @bind-Value="adult.Age"/>
+            </label>
+        </p>
+        <p>
+            <label>
+                Height
+                <InputNumber @bind-Value="adult.Height"/>
+            </label>
+        </p>
+        <p>
+            <label>
+                Weight
+                <InputNumber @bind-Value="adult.Weight"/>
+            </label>
+        </p>
+        <p>
+            <label>
+                Sex
+                <InputText @bind-Value="adult.Sex"/>
+            </label>
+        </p>
+        <p>
+            <label>
+                Job Title
+                <InputText @bind-Value="jobTitle.JobTitle"/>
+            </label>
+        </p>
+        <p>
+            <label>
+                Salary
+                <InputNumber @bind-Value="jobTitle.Salary"/>
+            </label>
+        </p>
+        <button type="submit">Submit</button>
     </EditForm>
+    
 
 @code {
     private Adult adult = new Adult();
+    private Job jobTitle = new Job();
     private AdultFileContext adultFileContext = new AdultFileContext();
 
     private void AddAdults()
     {
         Console.WriteLine(adult.ToString());
-        Job helper = new Job();
-        helper.Salary = 0;
-        helper.JobTitle = "Placeholder";
-        adult.JobTitle = helper;
+        adult.JobTitle = jobTitle;
         adultFileContext.AddAdult(adult);
+        NavigationManager.NavigateTo("/");
     }
 
 }
