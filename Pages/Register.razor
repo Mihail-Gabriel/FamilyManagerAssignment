@@ -4,32 +4,33 @@
 
 <h3>Register</h3>
 
-<form>
     <p>
         <label>
             UserName
-            <InputText @bind-Value="username"/>
+            <input type="text" @bind-value="username"/>
         </label>
     </p>
     <p>
         <label>
             Password
-            <InputText type="password" @bind-Value="password"/>
+            <input type="password" @bind-value="password"/>
         </label>
     </p>
     <p>
         <label>
             Role
-            <InputSelect @bind-Value="role">
+            <input type="radio" @bind-value="role">
                 <option value="Adult">Adult</option>
                 <option value="Child">Child</option>
-            </InputSelect>
+            </input>
         </label>
     </p>
-</form>
 @code {
     private string username;
     private string password;
     private string role;
+    //TODO Register User Methods in blazor, controller and service.
+    //TODO User JSON.
+    //Page now works accessing.
 
 }

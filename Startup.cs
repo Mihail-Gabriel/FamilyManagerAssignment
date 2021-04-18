@@ -14,8 +14,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FamilyManagerAssignment.Authentication;
-using FamilyManagerAssignment.Data;
-using FamilyManagerAssignment.Data.Implementation;
 
 namespace FamilyManagerAssignment
 {
@@ -34,9 +32,8 @@ namespace FamilyManagerAssignment
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddScoped<IUserService, UserServiceImpl>();
-            services
-                .AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+            services.AddHttpClient();
+            services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddAuthorization(options =>
             {

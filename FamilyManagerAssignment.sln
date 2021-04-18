@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyManagerAssignment", "FamilyManagerAssignment.csproj", "{6FE3597D-9D42-4172-83A8-B2C800EAE8FC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAPI", "WebAPI", "{0BF8A45F-DAF1-4255-AAAF-6AEA5F15DB62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyAPI", "..\FamilyAPI\FamilyAPI\FamilyAPI.csproj", "{7670DE8A-9118-46E1-8AC7-E267BF0D36E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,12 @@ Global
 		{6FE3597D-9D42-4172-83A8-B2C800EAE8FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FE3597D-9D42-4172-83A8-B2C800EAE8FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FE3597D-9D42-4172-83A8-B2C800EAE8FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7670DE8A-9118-46E1-8AC7-E267BF0D36E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7670DE8A-9118-46E1-8AC7-E267BF0D36E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7670DE8A-9118-46E1-8AC7-E267BF0D36E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7670DE8A-9118-46E1-8AC7-E267BF0D36E0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7670DE8A-9118-46E1-8AC7-E267BF0D36E0} = {0BF8A45F-DAF1-4255-AAAF-6AEA5F15DB62}
 	EndGlobalSection
 EndGlobal

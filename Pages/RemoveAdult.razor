@@ -1,7 +1,9 @@
 @page "/RemoveAdult"
 @using Models
-@using FileData
+@using System.Net.Http.Json
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+
 <AuthorizeView >
     <NotAuthorized>
         <h3>You require to be logged in and an adult to access this page</h3>
@@ -61,17 +63,17 @@ else
 @code {
     private IList<Adult> adults;
     private IList<Adult> adultToDelete = new List<Adult>();
-    private AdultFileContext fileContext = new AdultFileContext();
-
+    private HttpClient client = new HttpClient();
+    string apiUrl= @"http://localhost:5001/Adult";
     protected override async Task OnInitializedAsync()
     {
-        adults = fileContext.Adults;
+        adults = await client.GetFromJsonAsync<IList<Adult>>(apiUrl);
     }
 
     private void HandleDeleteList(Adult adult)
     {
-        Boolean flag = true;
-        for(int i = 0 ; i<adultToDelete.Count;i++)
+        var flag = true;
+        for(var i = 0 ; i<adultToDelete.Count;i++)
         {
             if (adult.Equals(adultToDelete[i]) )
             {
@@ -92,13 +94,10 @@ else
 
     private void HandleConfirmDelete()
     {
-        if (adultToDelete.Count <= 1 && adultToDelete != null)
-        {
-            fileContext.RemoveAdults(adultToDelete);
-            adultToDelete.Clear();
-            
-        }
-
-}
+        if (adultToDelete.Count < 1 || adultToDelete == null) return;
+        client.PutAsJsonAsync(apiUrl,adultToDelete);
+        adultToDelete.Clear();
+        NavigationManager.NavigateTo("/");
+    }
 
 }

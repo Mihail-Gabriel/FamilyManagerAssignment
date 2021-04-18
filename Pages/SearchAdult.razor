@@ -1,6 +1,6 @@
 @page "/SearchAdult"
 @using Models
-@using FileData
+@using System.Net.Http.Json
 <h3>Search Adults</h3>
 <form>
     <p>
@@ -8,13 +8,7 @@
         <input type="submit" value="Filter" @onclick="Search"/>
     </p>
 </form>
-@if (returnedAdults == null)
-{
-    <p>
-        <em>No adults to display...</em>
-    </p>
-}
-else
+@if (returnedAdults != null)
 {
     <table class="table">
         <thead>
@@ -55,14 +49,13 @@ else
 @code {
     private IList<Adult> returnedAdults;
     private string SearchString;
-    AdultFileContext fileContext = new AdultFileContext();
-    
-    public void Search()
+    string apiUrl = @"http://localhost:5001/Adult";
+    readonly HttpClient client = new HttpClient();
+
+    private async Task Search()
     {
-        if (fileContext.SearchByName(SearchString) != null)
-        {
-            returnedAdults = fileContext.SearchByName(SearchString);
-        }
+        Console.WriteLine(SearchString);
+        returnedAdults = await client.GetFromJsonAsync<IList<Adult>>(apiUrl += "/"+ SearchString);
     }
     
 }
