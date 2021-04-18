@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Update="app.db" CopyToOutputDirectory="PreserveNewest"/>
+        <None Update="app.db" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
     <ItemGroup>
@@ -15,13 +15,6 @@
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.2" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Areas" />
-      <Folder Include="Data\Implementation" />
-      <Folder Include="Data\Migrations" />
-      <Folder Include="Persistence" />
     </ItemGroup>
 
     <ItemGroup>
