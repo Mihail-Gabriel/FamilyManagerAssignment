@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+        <None Update="app.db" CopyToOutputDirectory="PreserveNewest"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -19,6 +19,21 @@
 
     <ItemGroup>
       <Folder Include="Areas" />
+      <Folder Include="Data\Implementation" />
+      <Folder Include="Data\Migrations" />
+      <Folder Include="Persistence" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Data\ApplicationDbContext.cs" />
+      <Compile Remove="Data\WeatherForecast.cs" />
+      <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Shared\LoginDisplay.razor" />
+      <Content Remove="adults.json" />
+      <Content Remove="Pages\FetchData.razor" />
     </ItemGroup>
 
 </Project>
