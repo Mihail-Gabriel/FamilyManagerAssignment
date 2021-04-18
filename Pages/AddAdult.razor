@@ -6,7 +6,7 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
 <h1>New Adult Form</h1>
-    <EditForm Model="@adult"  OnValidSubmit="@AddAdults">
+    <EditForm Model="@adult"  OnValidSubmit="@AddAdultsAsync">
         <DataAnnotationsValidator />
         <ValidationSummary/>
         <p>
@@ -80,11 +80,11 @@
     
 
 @code {
-    readonly Adult adult = new Adult();
-    readonly Job job = new Job();
-    readonly string apiUrl = @"http://localhost:5001/Adult";
-    readonly HttpClient client = new HttpClient();
-    private async Task AddAdults()
+    private Adult adult = new Adult();
+    private Job job = new Job();
+    private string apiUrl = @"http://localhost:5001/Adult";
+    private HttpClient client = new HttpClient();
+    private async Task AddAdultsAsync()
     {
         adult.JobTitle = job;
         string adultAsJson = JsonSerializer.Serialize(adult);

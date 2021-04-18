@@ -11,7 +11,7 @@
 </AuthorizeView>
 <AuthorizeView Policy="MustBeAdult">
 <h3>RemoveAdult</h3>
-<button type="button" @onclick="HandleConfirmDelete">
+<button type="button" @onclick="HandleConfirmDeleteAsync">
     Delete Selected
 </button>
 @if (adults == null)
@@ -92,7 +92,7 @@ else
         }
     }
 
-    private void HandleConfirmDelete()
+    private void HandleConfirmDeleteAsync()
     {
         if (adultToDelete.Count < 1 || adultToDelete == null) return;
         client.PutAsJsonAsync(apiUrl,adultToDelete);

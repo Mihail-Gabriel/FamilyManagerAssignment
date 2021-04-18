@@ -33,7 +33,7 @@ namespace FamilyManagerAssignment.Authentication
                 if (!string.IsNullOrEmpty(userAsJson))
                 {
                     User tmp = JsonSerializer.Deserialize<User>(userAsJson);
-                    ValidateLogin(tmp.UserName, tmp.Password);
+                    await ValidateLoginAsync(tmp.UserName, tmp.Password);
                 }
             }else
             {
@@ -44,7 +44,7 @@ namespace FamilyManagerAssignment.Authentication
             return await Task.FromResult(new AuthenticationState(cachedClaimsPrincipal));
         }
 
-        public async Task ValidateLogin(string username, string password)
+        public async Task ValidateLoginAsync(string username, string password)
         {
             if(string.IsNullOrEmpty(username)) throw new Exception("Enter username");
             if (string.IsNullOrEmpty(password)) throw new Exception("Enter password");
@@ -65,7 +65,7 @@ namespace FamilyManagerAssignment.Authentication
                 Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity))));
         }
 
-        public async Task LogOut()
+        public async Task LogOutAsync()
         {
             cachedUser = null;
             var user = new ClaimsPrincipal(new ClaimsIdentity());

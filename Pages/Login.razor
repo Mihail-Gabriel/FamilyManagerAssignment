@@ -18,12 +18,12 @@
         </div>
         <div style="color:red">@errorMessage </div>
         
-        <a href="" @onclick="PerformLogin">
+        <a href="" @onclick="PerformLoginAsync">
             Login
         </a>
     </NotAuthorized>
     <Authorized>
-        <a href="" @onclick="PerformLogOut">
+        <a href="" @onclick="PerformLogOutAsync">
             Log Out
         </a>
     </Authorized>
@@ -35,12 +35,12 @@
     private string password;
     private string errorMessage;
 
-    public async Task PerformLogin()
+    private async Task PerformLoginAsync()
     {
         errorMessage = "";
         try
         {
-             await ((CustomAuthenticationStateProvider)  AuthenticationStateProvider).ValidateLogin(username,password);
+             await ((CustomAuthenticationStateProvider)  AuthenticationStateProvider).ValidateLoginAsync(username,password);
             username = "";
             password = "";
         }
@@ -50,14 +50,14 @@
         }
     }
 
-    public async Task PerformLogOut()
+    private async Task PerformLogOutAsync()
     {
         errorMessage = "";
         username = "";
         password = "";
         try
         {
-            await ((CustomAuthenticationStateProvider) AuthenticationStateProvider).LogOut();
+            await ((CustomAuthenticationStateProvider) AuthenticationStateProvider).LogOutAsync();
             NavigationManager.NavigateTo("/");
         }
         catch(Exception e)

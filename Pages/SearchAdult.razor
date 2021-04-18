@@ -5,7 +5,7 @@
 <form>
     <p>
         Name: <input type="text" @bind-value="SearchString"/>
-        <input type="submit" value="Filter" @onclick="Search"/>
+        <input type="submit" value="Filter" @onclick="SearchAsync"/>
     </p>
 </form>
 @if (returnedAdults != null)
@@ -49,10 +49,10 @@
 @code {
     private IList<Adult> returnedAdults;
     private string SearchString;
-    string apiUrl = @"http://localhost:5001/Adult";
-    readonly HttpClient client = new HttpClient();
+    private string apiUrl = @"http://localhost:5001/Adult";
+    private HttpClient client = new HttpClient();
 
-    private async Task Search()
+    private async Task SearchAsync()
     {
         Console.WriteLine(SearchString);
         returnedAdults = await client.GetFromJsonAsync<IList<Adult>>(apiUrl += "/"+ SearchString);
