@@ -14,6 +14,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FamilyManagerAssignment.Authentication;
+using FamilyManagerAssignment.Services;
+using FamilyManagerAssignment.Services.Implementation;
+using Models;
 
 namespace FamilyManagerAssignment
 {
@@ -32,9 +35,9 @@ namespace FamilyManagerAssignment
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddHttpClient();
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
-            services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddScoped<IAdultConnection, AdultConnectionImpl>();
+            services.AddScoped<IUserConnection, UserConnectionImpl>();
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("MustBeAdult", a =>

@@ -5,6 +5,8 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
+using FamilyManagerAssignment.Services;
+using FamilyManagerAssignment.Services.Implementation;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using Models;
@@ -14,14 +16,13 @@ namespace FamilyManagerAssignment.Authentication
     public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     {
         private readonly IJSRuntime jsRuntime;
-        private HttpClient client;
-        string apiUrl = @"http://localhost:5001/User";
+        private IUserConnection userConnection;
         private User cachedUser;
 
         public CustomAuthenticationStateProvider(IJSRuntime jsRuntime)
         {
             this.jsRuntime = jsRuntime;
-            client = new HttpClient();
+            userConnection = new UserConnectionImpl();
         }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
@@ -51,7 +52,7 @@ namespace FamilyManagerAssignment.Authentication
             ClaimsIdentity identity = new ClaimsIdentity();
             try
             {
-                User user = await client.GetFromJsonAsync<User>(apiUrl+"?userName="+username+"&password="+password);
+                User user = await userConnection.getUserAsync(username,password);
                 identity = SetupClaimsForUser(user);
                 string serialisedData = JsonSerializer.Serialize(user);
                 await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);

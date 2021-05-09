@@ -5,7 +5,9 @@ namespace Models
 {
     public class Job
     {
+        [Required]
         public string JobTitle { get; set; }
+        [Required]
         public int Salary { get; set; }
 
         public override bool Equals(object? obj)

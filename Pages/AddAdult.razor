@@ -3,6 +3,8 @@
 @using System.Net.Http.Json
 @using System.Text
 @using System.Text.Json
+@using FamilyManagerAssignment.Services
+@using FamilyManagerAssignment.Services.Implementation
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
 <h1>New Adult Form</h1>
@@ -12,55 +14,55 @@
         <p>
             <label>
                 Id:
-                <InputNumber @bind-Value="adult.Id"/>
+                <InputNumber @bind-Value="person.Id"/>
             </label>
         </p>
         <p>
             <label>
                 FirstName:
-                <InputText @bind-Value="adult.FirstName"/>
+                <InputText @bind-Value="person.FirstName"/>
             </label>
         </p>
         <p>
             <label>
                 LastName:
-                <InputText @bind-Value="adult.LastName"/>
+                <InputText @bind-Value="person.LastName"/>
             </label>
         </p>
         <p>
             <label>
                 Hair Colour:
-                <InputText @bind-Value="adult.HairColor"/>
+                <InputText @bind-Value="person.HairColor"/>
             </label>
         </p>
         <p>
             <label>
                 Eye Colour:
-                <InputText @bind-Value="adult.EyeColor"/>
+                <InputText @bind-Value="person.EyeColor"/>
             </label>
         </p>
         <p>
             <label>
                 Age
-                <InputNumber @bind-Value="adult.Age"/>
+                <InputNumber @bind-Value="person.Age"/>
             </label>
         </p>
         <p>
             <label>
                 Height
-                <InputNumber @bind-Value="adult.Height"/>
+                <InputNumber @bind-Value="person.Height"/>
             </label>
         </p>
         <p>
             <label>
                 Weight
-                <InputNumber @bind-Value="adult.Weight"/>
+                <InputNumber @bind-Value="person.Weight"/>
             </label>
         </p>
         <p>
             <label>
                 Sex
-                <InputText @bind-Value="adult.Sex"/>
+                <InputText @bind-Value="person.Sex"/>
             </label>
         </p>
         <p>
@@ -80,16 +82,17 @@
     
 
 @code {
+    private Person person = new Person();
     private Adult adult = new Adult();
     private Job job = new Job();
-    private string apiUrl = @"http://localhost:5001/Adult";
-    private HttpClient client = new HttpClient();
+    IAdultConnection adultConnection = new AdultConnectionImpl();
     private async Task AddAdultsAsync()
     {
-        adult.JobTitle = job;
+        adult.AdultJob = job;
+        adult.Id = person.Id;
+        adult.Persona = person;
         string adultAsJson = JsonSerializer.Serialize(adult);
-        StringContent content = new StringContent(adultAsJson, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+        HttpResponseMessage response = await adultConnection.addAdultAsync(adultAsJson);
         if (!response.IsSuccessStatusCode)
             throw new Exception($"Error: {response.StatusCode},{response.ReasonPhrase}");
         NavigationManager.NavigateTo("/");

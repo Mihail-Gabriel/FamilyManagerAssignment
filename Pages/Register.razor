@@ -1,4 +1,8 @@
 @page "/Register"
+@using FamilyManagerAssignment.Services.Implementation
+@using FamilyManagerAssignment.Services
+@using Models
+@using System.Text.Json
 
 @inject NavigationManager NavigationManager
 
@@ -16,21 +20,27 @@
             <input type="password" @bind-value="password"/>
         </label>
     </p>
-    <p>
-        <label>
-            Role
-            <input type="radio" @bind-value="role">
-                <option value="Adult">Adult</option>
-                <option value="Child">Child</option>
-            </input>
-        </label>
-    </p>
+<p><a href="" @onclick="PerformRegisterAsync">
+               Register
+           </a></p>
+
 @code {
     private string username;
     private string password;
-    private string role;
-    //TODO Register User Methods in blazor, controller and service.
-    //TODO User JSON.
-    //Page now works accessing.
+    private IUserConnection userConnection = new UserConnectionImpl();
+
+
+    private async Task PerformRegisterAsync()
+    {
+        User user = new User();
+        user.UserName = username;
+        user.Password = password;
+        user.Role = "Adult";
+        string userAsJson = JsonSerializer.Serialize(user);
+        HttpResponseMessage response = await userConnection.registerUserAsync(userAsJson);
+        if (response.IsSuccessStatusCode)
+            NavigationManager.NavigateTo("Login");
+        
+    }
 
 }

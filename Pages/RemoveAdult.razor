@@ -1,6 +1,8 @@
 @page "/RemoveAdult"
 @using Models
 @using System.Net.Http.Json
+@using FamilyManagerAssignment.Services
+@using FamilyManagerAssignment.Services.Implementation
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
 
@@ -42,17 +44,17 @@ else
         @foreach (var adult in adults)
         {
             <tr @onclick="@(() => HandleDeleteList(adult))" style="cursor:pointer">
-                <td>@adult.Id.ToString()</td>
-                <td>@adult.FirstName</td>
-                <td>@adult.LastName</td>
-                <td>@adult.HairColor</td>
-                <td>@adult.EyeColor</td>
-                <td>@adult.Age.ToString()</td>
-                <td>@adult.Weight.ToString()</td>
-                <td>@adult.Height.ToString()</td>
-                <td>@adult.Sex</td>
-                <td>@adult.JobTitle.JobTitle</td>
-                <td>@adult.JobTitle.Salary.ToString()</td>
+                <td>@adult.Persona.Id.ToString()</td>
+                <td>@adult.Persona.FirstName</td>
+                <td>@adult.Persona.LastName</td>
+                <td>@adult.Persona.HairColor</td>
+                <td>@adult.Persona.EyeColor</td>
+                <td>@adult.Persona.Age.ToString()</td>
+                <td>@adult.Persona.Weight.ToString()</td>
+                <td>@adult.Persona.Height.ToString()</td>
+                <td>@adult.Persona.Sex</td>
+                <td>@adult.AdultJob.JobTitle</td>
+                <td>@adult.AdultJob.Salary.ToString()</td>
             </tr>
         }
         </tbody>
@@ -63,11 +65,10 @@ else
 @code {
     private IList<Adult> adults;
     private IList<Adult> adultToDelete = new List<Adult>();
-    private HttpClient client = new HttpClient();
-    string apiUrl= @"http://localhost:5001/Adult";
+    private IAdultConnection adultConnection = new AdultConnectionImpl();
     protected override async Task OnInitializedAsync()
     {
-        adults = await client.GetFromJsonAsync<IList<Adult>>(apiUrl);
+        adults = await adultConnection.getAdultAsync();
     }
 
     private void HandleDeleteList(Adult adult)
@@ -95,7 +96,7 @@ else
     private void HandleConfirmDeleteAsync()
     {
         if (adultToDelete.Count < 1 || adultToDelete == null) return;
-        client.PutAsJsonAsync(apiUrl,adultToDelete);
+        adultConnection.deleteAdultAsync(adultToDelete);
         adultToDelete.Clear();
         NavigationManager.NavigateTo("/");
     }
